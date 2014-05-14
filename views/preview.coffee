@@ -1,18 +1,22 @@
 class PreviewView extends JView
-
   constructor: (options = {}, data) ->
-
     options.cssClass = "preview-panel"
-
     super options, data
-
     @createPlaceholder()
-
     @loader = new KDLoaderView
-      size:
-        width: 48
+      size: { width: 48 }
 
     KD.utils.wait 1, => @addSubView @loader
+
+  createName: (name) ->
+    @name = new KDView
+      cssClass: "preview-img-name"
+      partial: name
+
+  destroyAll: ->
+    @loader.show()
+    @item?.destroy()
+    @name?.destroy()
 
   createPlaceholder: ->
     @placeholder = new KDCustomHTMLView
@@ -23,101 +27,29 @@ class PreviewView extends JView
       @addSubView @placeholder
       @placeholder.hide()
 
-  createImage: (src, image) ->
-    src = "data:image/jpeg;base64,#{src}"
-    @img         = new KDCustomHTMLView
-      tagName    : "img"
-      cssClass   : "preview-img"
-      bind       : "load error"
-      attributes : { src }
-
-    @imgName = new KDView
-      cssClass: "preview-img-name"
-      partial: "#{image.name}"
-
-    @img.once "load",  => @loader.hide()
-    @img.once "error", => @loader.hide()
-
+  addAll: ->
     KD.utils.wait 1, =>
       @placeholder.show()
-      @placeholder.addSubView @img
-      @placeholder.addSubView @imgName
-
-  createMusic: (src, music) ->
-    src = "data:audio/mp3;base64,#{src}"
-    @music       = new KDCustomHTMLView
-      tagName    : "audio"
-      cssClass   : "preview-music"
-      bind       : "loadeddata error"
-      attributes :
-        src      : src
-        controls : true
-
-    @imgName = new KDView
-      cssClass: "preview-img-name"
-      partial: "#{music.name}"
-
-    @music.once "loadeddata",  => @loader.hide()
-    @music.once "error", => @loader.hide()
-
-    KD.utils.wait 1, =>
-      @placeholder.show()
-      @placeholder.addSubView @music
-      @placeholder.addSubView @imgName
-
-  createVideo: (src, video) ->
-    src = "data:video/mp4;base64,#{src}"
-    @video       = new KDCustomHTMLView
-      tagName    : "video"
-      cssClass   : "preview-video"
-      bind       : "loadeddata error"
-      attributes :
-        src      : src
-        controls : true
-
-    @imgName = new KDView
-      cssClass: "preview-img-name"
-      partial: "#{video.name}"
-
-    @video.once "loadeddata",  => @loader.hide()
-    @video.once "error", => @loader.hide()
-
-    KD.utils.wait 1, =>
-      @placeholder.show()
-      @placeholder.addSubView @video
-      @placeholder.addSubView @imgName
+      @placeholder.addSubView @item
+      @placeholder.addSubView @name
 
   generateImage: (image) ->
-    @loader.show()
-    @img?.destroy()
-    @imgName?.destroy()
-    @imgDetails?.destroy()
-    @music?.destroy()
-    @video?.destroy()
-
+    @destroyAll()
     image.fetchRawContents().then (resolve, reject) =>
-      @createImage resolve.content, image
+      @item = new PreviewImage resolve.content, image, this
+      @createName image.name
+      @addAll()
 
   generateMusic: (music) ->
-    @loader.show()
-    @img?.destroy()
-    @imgName?.destroy()
-    @imgDetails?.destroy()
-    @music?.destroy()
-    @video?.destroy()
-
+    @destroyAll()
     music.fetchRawContents().then (resolve, reject) =>
-      @createMusic resolve.content, music
+      @item = new PreviewMusic resolve.content, music, this
+      @createName music.name
+      @addAll()
 
   generateVideo: (video) ->
-    @loader.show()
-    @img?.destroy()
-    @imgName?.destroy()
-    @imgDetails?.destroy()
-    @music?.destroy()
-    @video?.destroy()
-
+    @destroyAll()
     video.fetchRawContents().then (resolve, reject) =>
-      @createVideo resolve.content, video
-
-
+      @item = new PreviewVideo resolve.content, video, this
+      @createName video.name
+      @addAll()
