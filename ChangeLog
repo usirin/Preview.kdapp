@@ -1,0 +1,8 @@
+2014-05-13 Umut Sirin <@usirin>
+
+   * Preview (index.coffee): Added Picture support.
+   * Preview (resources/style.css): CSS Styling.
+
+2014-05-12 Umut Sirin <@usirin>
+
+   * Preview (index.coffee): Application created.
