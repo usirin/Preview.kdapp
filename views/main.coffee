@@ -36,7 +36,7 @@ class PreviewMainView extends KDView
     @panel = @workspace.getActivePanel()
     {@finder, @preview} = @panel.panesByName
 
-    @panel.on "ImageSelected", (file) => @preview.generateImage file
-    @panel.on "MusicSelected", (file) => @preview.generateMusic file
-    @panel.on "VideoSelected", (file) => @preview.generateVideo file
+    @panel.on "ImageSelected", (file) => @preview.generate generator: PreviewImage, file: file
+    @panel.on "MusicSelected", (file) => @preview.generate generator: PreviewMusic, file: file
+    @panel.on "VideoSelected", (file) => @preview.generate generator: PreviewVideo, file: file
 

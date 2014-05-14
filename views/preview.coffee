@@ -33,23 +33,11 @@ class PreviewView extends JView
       @placeholder.addSubView @item
       @placeholder.addSubView @name
 
-  generateImage: (image) ->
+  generate: (options) ->
+    { generator, file } = options
     @destroyAll()
-    image.fetchRawContents().then (resolve, reject) =>
-      @item = new PreviewImage resolve.content, image, this
-      @createName image.name
+    file.fetchRawContents().then (resolve, reject) =>
+      @item = new generator resolve.content, file, this
+      @createName file.name
       @addAll()
 
-  generateMusic: (music) ->
-    @destroyAll()
-    music.fetchRawContents().then (resolve, reject) =>
-      @item = new PreviewMusic resolve.content, music, this
-      @createName music.name
-      @addAll()
-
-  generateVideo: (video) ->
-    @destroyAll()
-    video.fetchRawContents().then (resolve, reject) =>
-      @item = new PreviewVideo resolve.content, video, this
-      @createName video.name
-      @addAll()
