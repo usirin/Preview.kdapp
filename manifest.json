@@ -14,6 +14,12 @@
     "blocks": {
       "app": {
         "files": [
+          "./controllers/main.coffee",
+
+          "./views/main.coffee",
+          "./views/preview.coffee",
+          "./views/finder.coffee",
+
           "./index.coffee"
         ]
       }
