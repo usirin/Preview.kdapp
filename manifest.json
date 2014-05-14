@@ -14,6 +14,9 @@
     "blocks": {
       "app": {
         "files": [
+
+          "./helpers.coffee",
+
           "./controllers/main.coffee",
 
           "./views/main.coffee",
