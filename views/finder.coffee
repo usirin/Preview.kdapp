@@ -15,6 +15,8 @@ class PreviewFinder extends KDView
       @finder.updateVMRoot vmName, "/home/#{KD.nick()}"
 
       @finder.on "FileNeedsToBeOpened", (file) =>
+        # is(Image|Music|Video) functions
+        # comes from helpers.coffee
         @openImage file if isImage file
         @openMusic file if isMusic file
         @openVideo file if isVideo file
