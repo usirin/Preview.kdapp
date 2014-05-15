@@ -1,7 +1,8 @@
 class PreviewImage
   constructor: (@src, @image, @panel) ->
     @mime = "image/#{image.getExtension()}"
-    return @create()
+    return new Promise (resolve, reject) =>
+      resolve @create()
 
   base64Src: (src) ->
     "data:#{@mime};base64,#{@src}"
