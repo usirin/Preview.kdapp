@@ -9,9 +9,11 @@ body {
   text-align       : center
 }
 
-.preview-placeholder img {
+.preview-placeholder img,
+.preview-placeholder video {
   max-width: 100%;
   max-height: 80%;
+  min-width: 40%;
   height: auto;
 }
 
