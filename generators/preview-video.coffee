@@ -2,17 +2,25 @@ class PreviewVideo
   constructor: (@src, @video, @panel) ->
     { @vmController } = KD.singletons
     @mime = "video/#{@video.getExtension()}"
+    @webPath = "/home/#{KD.nick()}/Web/"
+    @webPrefix = "kd.video-link"
+
+  random: -> KD.utils.getRandomNumber(1e21)
 
   generate: ->
+    @cleanOlderVideos()
     return @linkVideo()
+
+  cleanOlderVideos: ->
+    @vmController.run("rm /home/#{KD.nick()}/Web/#{@webPrefix}*")
 
   linkVideo: ->
     path = FSHelper.plainPath @video.path
-    linkName = "kd.video-link.#{KD.utils.getRandomNumber(1e21)}.#{@video.getExtension()}"
-    destinationPath = "/home/#{KD.nick()}/Web/#{linkName}"
+    linkName = "#{@webPrefix}.#{@random()}.#{@video.getExtension()}"
+    destinationPath = "#{@webPath}#{linkName}"
     @vmController.run("ln -s #{path} #{destinationPath}").then (resolve) =>
-      webPath = "//#{KD.nick()}.kd.io/#{linkName}"
-      @create(webPath)
+      publicPath = "//#{KD.nick()}.kd.io/#{linkName}"
+      @create(publicPath)
 
   base64Src: (src) ->
     "data:#{@mime};base64,#{@src}"
