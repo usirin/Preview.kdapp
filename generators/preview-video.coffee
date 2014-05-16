@@ -3,6 +3,7 @@ class PreviewVideo
     { @vmController } = KD.singletons
     @mime = "video/#{@video.getExtension()}"
 
+  generate: ->
     return @linkVideo()
 
   linkVideo: ->
@@ -17,7 +18,6 @@ class PreviewVideo
     "data:#{@mime};base64,#{@src}"
 
   create: (src, video) ->
-    console.log @video
     src ||= @base64Src()
     @video       = new KDCustomHTMLView
       tagName    : "video"

@@ -37,7 +37,7 @@ class PreviewView extends JView
     { generator, file } = options
     @destroyAll()
     file.fetchRawContents().then (resolve, reject) =>
-      (new generator resolve.content, file, this).then (item) =>
+      (new generator resolve.content, file, this).generate().then (item) =>
         @item = item
         @createName file.name
         @addAll()

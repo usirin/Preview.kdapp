@@ -1,6 +1,8 @@
 class PreviewMusic
   constructor: (@src, @music, @panel) ->
     @mime = "audio/#{@music.getExtension()}"
+
+  generate: ->
     return new Promise (resolve, reject) =>
       resolve @create()
 

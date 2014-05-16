@@ -1,6 +1,8 @@
 class PreviewImage
   constructor: (@src, @image, @panel) ->
     @mime = "image/#{image.getExtension()}"
+
+  generate: ->
     return new Promise (resolve, reject) =>
       resolve @create()
 
