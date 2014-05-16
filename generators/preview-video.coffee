@@ -3,16 +3,12 @@ class PreviewVideo
     { @vmController } = KD.singletons
     @mime = "video/#{@video.getExtension()}"
     @webPath = "/home/#{KD.nick()}/Web/"
-    @webPrefix = "kd.video-link"
+    @webPrefix = ".kd.link-video"
 
   random: -> KD.utils.getRandomNumber(1e21)
 
   generate: ->
-    @cleanOlderVideos()
     return @linkVideo()
-
-  cleanOlderVideos: ->
-    @vmController.run("rm /home/#{KD.nick()}/Web/#{@webPrefix}*")
 
   linkVideo: ->
     path = FSHelper.plainPath @video.path

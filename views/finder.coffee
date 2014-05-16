@@ -1,25 +1,36 @@
 class PreviewFinder extends KDView
+  webPrefix: ".kd.link"
+
   constructor: (options = {}, data) ->
+
+    @vmController = KD.getSingleton "vmController"
+
+    # clean olderfiles
+    @cleanOlderFiles()
 
     super options, data
 
-    vmController = KD.getSingleton "vmController"
-    vmController.fetchDefaultVmName (vmName) =>
+    @vmController.fetchDefaultVmName (vmName) =>
       @finder = new NFinderController
         nodeIdPath       : "path"
         nodeParentIdPath : "parentPath"
         contextMenu      : yes
         useStorage       : no
+        bind             : "keydown"
 
       @addSubView @finder.getView()
       @finder.updateVMRoot vmName, "/home/#{KD.nick()}"
 
       @finder.on "FileNeedsToBeOpened", (file) =>
+        @cleanOlderFiles()
         # is(Image|Music|Video) functions
         # comes from helpers.coffee
         @openImage file if isImage file
         @openMusic file if isMusic file
         @openVideo file if isVideo file
+
+  cleanOlderFiles: ->
+    @vmController.run "rm /home/#{KD.nick()}/Web/#{@webPrefix}*"
 
   openImage: (file) ->
     file.fetchContents (err, contents) =>
