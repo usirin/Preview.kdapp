@@ -9,6 +9,7 @@ class PreviewFinder extends KDView
     @cleanOlderFiles()
 
     super options, data
+    { isImage, isMusic, isVideo } = PreviewHelpers
 
     @vmController.fetchDefaultVmName (vmName) =>
       @finder = new NFinderController
