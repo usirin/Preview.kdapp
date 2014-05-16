@@ -30,7 +30,7 @@ class PreviewMainView extends KDView
       @workspace.once "viewAppended", =>
         @bindWorkspaceEvents()
 
-      KD.utils.wait 1, => @addSubView @workspace
+      KD.utils.defer => @addSubView @workspace
 
   bindWorkspaceEvents: ->
     @panel = @workspace.getActivePanel()

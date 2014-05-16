@@ -6,7 +6,7 @@ class PreviewView extends JView
     @loader = new KDLoaderView
       size: { width: 48 }
 
-    KD.utils.wait 1, => @addSubView @loader
+    KD.utils.defer => @addSubView @loader
 
   createName: (name) ->
     @name = new KDView
@@ -23,12 +23,12 @@ class PreviewView extends JView
       tagName: "div"
       cssClass: "preview-placeholder"
 
-    KD.utils.wait 1, =>
+    KD.utils.defer =>
       @addSubView @placeholder
       @placeholder.hide()
 
   addAll: ->
-    KD.utils.wait 1, =>
+    KD.utils.defer =>
       @placeholder.show()
       @placeholder.addSubView @item
       @placeholder.addSubView @name
