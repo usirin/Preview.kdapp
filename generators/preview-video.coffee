@@ -34,6 +34,7 @@ class PreviewVideo
       attributes :
         src      : src
         controls : true
+        autoplay : true
         width    : "auto"
         height   : "auto"
 
