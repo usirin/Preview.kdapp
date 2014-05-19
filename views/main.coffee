@@ -20,23 +20,9 @@ class PreviewMainView extends KDView
                 paneClass     : PreviewFinder
               }
               {
-                type          : "split"
-                name          : "InnerSplit"
-                options       :
-                  direction   : "horizontal"
-                  sizes       : [null, "150px"]
-                views         : [
-                  {
-                    type      : "custom"
-                    name      : "preview"
-                    paneClass : PreviewView
-                  }
-                  {
-                    type      : "custom"
-                    name      : "details"
-                    paneClass : PreviewDetails
-                  }
-                ]
+                type          : "custom"
+                name          : "previewArea"
+                paneClass     : PreviewArea
               }
             ]
         ]
@@ -48,11 +34,11 @@ class PreviewMainView extends KDView
 
   bindWorkspaceEvents: ->
     @panel = @workspace.getActivePanel()
-    {@finder, @preview, @details} = @panel.panesByName
+    {@finder, @previewArea} = @panel.panesByName
 
-    @panel.on "ImageSelected", (file) => @preview.generate generator: PreviewImage, file: file
-    @panel.on "MusicSelected", (file) => @preview.generate generator: PreviewMusic, file: file
-    @panel.on "VideoSelected", (file) => @preview.generate generator: PreviewVideo, file: file
+    @panel.on "ImageSelected", (file) => @previewArea.emit "ImageSelected", file
+    @panel.on "MusicSelected", (file) => @previewArea.emit "MusicSelected", file
+    @panel.on "VideoSelected", (file) => @previewArea.emit "VideoSelected", file
 
-    @panel.on "FileSelected",  (file) => @details.update file
+    @panel.on "FileSelected",  (file) => @previewArea.emit "FileSelected",  file
 

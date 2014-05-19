@@ -26,7 +26,10 @@
           "./views/details-item.coffee",
           "./views/preview.coffee",
           "./views/details.coffee",
+
+          "./views/area.coffee",
           "./views/finder.coffee",
+
           "./views/main.coffee",
 
           "./index.coffee"
