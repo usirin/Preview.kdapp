@@ -9,14 +9,14 @@ class PreviewView extends JView
     KD.utils.defer => @addSubView @loader
 
   createName: (name) ->
-    @name = new KDView
+    @name ||= new KDView
       cssClass: "preview-img-name"
-      partial: name
+
+    @name.updatePartial name
 
   destroyAll: ->
     @loader.show()
     @item?.destroy()
-    @name?.destroy()
 
   createPlaceholder: ->
     @placeholder = new KDCustomHTMLView
@@ -31,10 +31,11 @@ class PreviewView extends JView
     KD.utils.defer =>
       @placeholder.show()
       @placeholder.addSubView @item
-      @placeholder.addSubView @name
+      @placeholder.addSubView @name unless @name
 
   generate: (options) ->
     { generator, file } = options
+    console.log file
     @destroyAll()
 
     file.fetchRawContents().then (resolve, reject) =>
@@ -42,7 +43,7 @@ class PreviewView extends JView
         @item = item
         @createName file.name
         @addAll()
-    , (err) =>
+    , (err) => # this happens when a file size is over 10MiB
       (new generator null, file, this).generate().then (item) =>
         @item = item
         @createName file.name

@@ -30,8 +30,14 @@ class PreviewFinder extends KDView
         @openMusic file if isMusic file
         @openVideo file if isVideo file
 
+        @fileSelected file
+
   cleanOlderFiles: ->
     @vmController.run "rm /home/#{KD.nick()}/Web/#{@webPrefix}*"
+
+  fileSelected: (file) ->
+    panel = @getDelegate()
+    panel.emit "FileSelected", file
 
   openImage: (file) ->
     file.fetchContents (err, contents) =>

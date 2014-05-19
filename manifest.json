@@ -23,9 +23,11 @@
 
           "./controllers/main.coffee",
 
-          "./views/main.coffee",
+          "./views/details-item.coffee",
           "./views/preview.coffee",
+          "./views/details.coffee",
           "./views/finder.coffee",
+          "./views/main.coffee",
 
           "./index.coffee"
         ]
