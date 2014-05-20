@@ -1,25 +1,10 @@
-class PreviewVideo
+class PreviewVideo extends BaseFile
   constructor: (@src, @video, @panel) ->
-    { @vmController } = KD.singletons
-    @mime = "video/#{@video.getExtension()}"
-    @webPath = "/home/#{KD.nick()}/Web/"
-    @webPrefix = ".kd.link-video"
+    super @src, @video, @panel
 
-  random: -> KD.utils.getRandomNumber(1e21)
+  mime: -> "video/#{@video.getExtension()}"
 
-  generate: ->
-    return @linkVideo()
-
-  linkVideo: ->
-    path = FSHelper.plainPath @video.path
-    linkName = "#{@webPrefix}.#{@random()}.#{@video.getExtension()}"
-    destinationPath = "#{@webPath}#{linkName}"
-    @vmController.run("ln -s #{path} #{destinationPath}").then (resolve) =>
-      publicPath = "//#{KD.nick()}.kd.io/#{linkName}"
-      @create(publicPath)
-
-  base64Src: (src) ->
-    "data:#{@mime};base64,#{@src}"
+  webPrefix: -> ".kd.link-video"
 
   create: (src, video) ->
     src ||= @base64Src()

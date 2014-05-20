@@ -1,16 +1,13 @@
-class PreviewMusic
+class PreviewMusic extends BaseFile
   constructor: (@src, @music, @panel) ->
-    @mime = "audio/#{@music.getExtension()}"
+    super @src, @music, @panel
 
-  generate: ->
-    return new Promise (resolve, reject) =>
-      resolve @create()
+  mime: -> "audio/#{@music.getExtension()}"
 
-  base64Src: (src) ->
-    "data:#{@mime};base64,#{@src}"
+  webPrefix: -> ".kd.link-music"
 
   create: (src, music) ->
-    src = @base64Src()
+    src ||= @base64Src()
     @music       = new KDCustomHTMLView
       tagName    : "audio"
       cssClass   : "preview-music"

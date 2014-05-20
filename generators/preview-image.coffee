@@ -1,16 +1,13 @@
-class PreviewImage
+class PreviewImage extends BaseFile
   constructor: (@src, @image, @panel) ->
-    @mime = "image/#{image.getExtension()}"
+    super @src, @image, @panel
 
-  generate: ->
-    return new Promise (resolve, reject) =>
-      resolve @create()
+  mime: -> "image/#{@image.getExtension()}"
 
-  base64Src: (src) ->
-    "data:#{@mime};base64,#{@src}"
+  webPrefix: -> ".kd.link-image"
 
   create: (src, image) ->
-    src = @base64Src()
+    src ||= @base64Src()
     @img         = new KDCustomHTMLView
       tagName    : "img"
       cssClass   : "preview-img"

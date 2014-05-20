@@ -17,6 +17,7 @@
 
           "./helpers.coffee",
 
+          "./generators/base-file.coffee",
           "./generators/preview-image.coffee",
           "./generators/preview-music.coffee",
           "./generators/preview-video.coffee",
