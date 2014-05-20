@@ -1,3 +1,11 @@
+@import url('//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css');
+
+.file-thumb {
+  font-family : 'FontAwesome';
+  font-size   : 20vh;
+  display     : inline-block;
+}
+
 body {
   background-color: #fff;
 }
@@ -68,6 +76,7 @@ body {
   box-sizing        : border-box;
 }
 
+.file-thumb,
 .preview-placeholder img,
 .preview-placeholder video {
   background        : rgba(0, 0, 0, 0.1);

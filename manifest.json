@@ -21,6 +21,7 @@
           "./generators/preview-image.coffee",
           "./generators/preview-music.coffee",
           "./generators/preview-video.coffee",
+          "./generators/preview-file.coffee",
 
           "./controllers/main.coffee",
 
