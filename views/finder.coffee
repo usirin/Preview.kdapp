@@ -9,7 +9,6 @@ class PreviewFinder extends KDView
     @cleanOlderFiles()
 
     super options, data
-    { isImage, isMusic, isVideo } = PreviewHelpers
 
     @vmController.fetchDefaultVmName (vmName) =>
       @finder = new NFinderController
@@ -24,38 +23,9 @@ class PreviewFinder extends KDView
 
       @finder.on "FileNeedsToBeOpened", (file) =>
         @cleanOlderFiles()
-        # is(Image|Music|Video) functions
-        # comes from helpers.coffee
-        @openImage file if isImage file
-        @openMusic file if isMusic file
-        @openVideo file if isVideo file
-
-        @fileSelected file
+        mainView = @getDelegate()
+        mainView.emit "FileSelected", file
 
   cleanOlderFiles: ->
     @vmController.run "rm /home/#{KD.nick()}/Web/#{@webPrefix}*"
-
-  fileSelected: (file) ->
-    panel = @getDelegate()
-    panel.emit "FileSelected", file
-
-  openImage: (file) ->
-    panel = @getDelegate()
-    panel.emit "ImageSelected", file
-
-  openMusic: (file) ->
-    file.fetchContents (err, contents) =>
-      if err
-        return new KDNotificationView
-          type     : "mini"
-          cssClass : "error"
-          title    : "Sorry, couldn't fetch file content, please try again..."
-          duration : 3000
-
-    panel = @getDelegate()
-    panel.emit "MusicSelected", file
-
-  openVideo: (file) ->
-    panel = @getDelegate()
-    panel.emit "VideoSelected", file
 

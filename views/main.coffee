@@ -36,9 +36,5 @@ class PreviewMainView extends KDView
     @panel = @workspace.getActivePanel()
     {@finder, @previewArea} = @panel.panesByName
 
-    @panel.on "ImageSelected", (file) => @previewArea.emit "ImageSelected", file
-    @panel.on "MusicSelected", (file) => @previewArea.emit "MusicSelected", file
-    @panel.on "VideoSelected", (file) => @previewArea.emit "VideoSelected", file
-
-    @panel.on "FileSelected",  (file) => @previewArea.emit "FileSelected",  file
+    @previewArea.forwardEvent @panel, "FileSelected"
 
