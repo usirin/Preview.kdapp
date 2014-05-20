@@ -40,14 +40,6 @@ class PreviewFinder extends KDView
     panel.emit "FileSelected", file
 
   openImage: (file) ->
-    file.fetchContents (err, contents) =>
-      if err
-        return new KDNotificationView
-          type     : "mini"
-          cssClass : "error"
-          title    : "Sorry, couldn't fetch file content, please try again..."
-          duration : 3000
-
     panel = @getDelegate()
     panel.emit "ImageSelected", file
 
