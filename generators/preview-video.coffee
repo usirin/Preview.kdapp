@@ -1,6 +1,4 @@
 class PreviewVideo extends BaseFile
-  constructor: (@src, @video, @panel) ->
-    super @src, @video, @panel
 
   mime: -> "video/#{@video.getExtension()}"
 

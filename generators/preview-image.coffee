@@ -1,6 +1,4 @@
 class PreviewImage extends BaseFile
-  constructor: (@src, @image, @panel) ->
-    super @src, @image, @panel
 
   mime: -> "image/#{@image.getExtension()}"
 

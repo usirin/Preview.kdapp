@@ -1,6 +1,4 @@
 class PreviewFile extends BaseFile
-  constructor: (@src, @file, @panel) ->
-    super @src, @file, @panel
 
   fontAwesomeLetter: (fileType) ->
     typeToLetterMap =

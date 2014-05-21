@@ -1,6 +1,4 @@
 class PreviewMusic extends BaseFile
-  constructor: (@src, @music, @panel) ->
-    super @src, @music, @panel
 
   mime: -> "audio/#{@music.getExtension()}"
 
