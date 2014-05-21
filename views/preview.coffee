@@ -35,7 +35,6 @@ class PreviewView extends JView
 
   generate: (options) ->
     { generator, file } = options
-    console.log file
     @destroyAll()
 
     file.fetchRawContents().then (resolve, reject) =>

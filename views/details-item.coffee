@@ -1,18 +1,15 @@
 class PreviewDetailsItem extends JView
   constructor: (options={}, data) ->
     options.cssClass = KD.utils.curry "details-item", options.cssClass
+    data.propName ?= ""
+    data.propData ?= ""
     super options, data
+    @hide()
 
-  itemTemplate: ->
-    data = @getData()
-
-    console.log data
-
-    propName = data.propName || ""
-    propData = data.propData || ""
+  pistachio: ->
     """
-    <div class="prop">#{ propName }</div>
-    <div class="prop-data">#{ propData }</div>
+    <div class="prop">{{ #(propName) }}</div>
+    <div class="prop-data">{{ #(propData) }}</div>
     <div style="clear: both"></div>
     """
 
@@ -24,9 +21,4 @@ class PreviewDetailsItem extends JView
       oldData[key] = value
 
     @setData oldData
-
-    @renderTemplate()
-
-  renderTemplate: ->
-    @updatePartial @itemTemplate()
 
