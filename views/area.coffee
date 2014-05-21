@@ -13,6 +13,6 @@ class PreviewArea extends KDView
     generator = switch FSFile.getFileType file.getExtension()
       when "image" then PreviewImage
       when "video" then PreviewVideo
-      when "audio" then PreviewMusic
+      when "sound" then PreviewMusic
       else PreviewFile
 
