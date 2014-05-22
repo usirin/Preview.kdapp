@@ -1,5 +1,17 @@
 @import url('//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css');
 
+.preview-app .inner-header {
+  background    : #282f31 !important;
+  border-bottom : 1px solid #185334 !important;
+}
+
+.preview-app .inner-header .title {
+  font-size   : 100%;
+  color       : #fff;
+  line-height : 36px;
+  margin-left : 10px;
+}
+
 .file-thumb {
   font-family : 'FontAwesome';
   font-size   : 20vh;
