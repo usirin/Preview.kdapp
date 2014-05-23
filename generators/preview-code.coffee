@@ -2,7 +2,6 @@ class PreviewCode extends BaseFile
 
   create: (src, file) ->
     @file.fetchContents().then (resolve, reject) =>
-      console.log(hljs.highlightAuto resolve)
       @element   = new KDCustomHTMLView
         tagName  : "pre"
         cssClass : "code"

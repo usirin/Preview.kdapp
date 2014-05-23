@@ -10,10 +10,26 @@ class PreviewArea extends KDView
       @details.update file
 
   getGenerator: (file) ->
-    generator = switch FSFile.getFileType file.getExtension()
+    markdownExtensions = [
+      "markdown"
+      "mdown"
+      "mkdn"
+      "md"
+      "mkd"
+      "mdwn"
+      "mdtxt"
+      "mdtext"
+      "text"
+    ]
+
+    ext = file.getExtension()
+    generator = switch FSFile.getFileType ext
       when "image" then PreviewImage
       when "video" then PreviewVideo
       when "sound" then PreviewMusic
       when "code"  then PreviewCode
-      else PreviewFile
+      else do ->
+        if ext is "rb" then PreviewCode
+        else if _.contains markdownExtensions, ext then PreviewMarkdown
+        else PreviewFile
 

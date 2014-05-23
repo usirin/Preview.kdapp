@@ -19,6 +19,7 @@
 
           "./generators/base-file.coffee",
           "./generators/preview-code.coffee",
+          "./generators/preview-markdown.coffee",
           "./generators/preview-image.coffee",
           "./generators/preview-music.coffee",
           "./generators/preview-video.coffee",

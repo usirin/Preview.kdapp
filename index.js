@@ -1,4 +1,4 @@
-/* Compiled by kdc on Fri May 23 2014 21:03:43 GMT+0000 (UTC) */
+/* Compiled by kdc on Sat May 24 2014 01:39:41 GMT+0000 (UTC) */
 (function() {
 /* KDAPP STARTS */
 /* BLOCK STARTS: helpers.coffee */
@@ -112,7 +112,6 @@ PreviewCode = (function(_super) {
     var _this = this;
     return this.file.fetchContents().then(function(resolve, reject) {
       var content;
-      console.log(hljs.highlightAuto(resolve));
       _this.element = new KDCustomHTMLView({
         tagName: "pre",
         cssClass: "code"
@@ -137,6 +136,43 @@ PreviewCode = (function(_super) {
   };
 
   return PreviewCode;
+
+})(BaseFile);
+/* BLOCK STARTS: generators/preview-markdown.coffee */
+var PreviewMarkdown, _ref,
+  __hasProp = {}.hasOwnProperty,
+  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+PreviewMarkdown = (function(_super) {
+  __extends(PreviewMarkdown, _super);
+
+  function PreviewMarkdown() {
+    _ref = PreviewMarkdown.__super__.constructor.apply(this, arguments);
+    return _ref;
+  }
+
+  PreviewMarkdown.prototype.create = function(src, file) {
+    var _this = this;
+    return this.file.fetchContents().then(function(resolve, reject) {
+      _this.element = new KDCustomHTMLView({
+        cssClass: "markdown",
+        partial: KD.utils.applyMarkdown(resolve)
+      });
+      KD.utils.defer(function() {
+        return _this.panel.loader.hide();
+      });
+      return _this.element;
+    });
+  };
+
+  PreviewMarkdown.prototype.link = function() {
+    var _this = this;
+    return new Promise(function(resolve, reject) {
+      return resolve(_this.create());
+    });
+  };
+
+  return PreviewMarkdown;
 
 })(BaseFile);
 /* BLOCK STARTS: generators/preview-image.coffee */
@@ -565,9 +601,11 @@ PreviewArea = (function(_super) {
   }
 
   PreviewArea.prototype.getGenerator = function(file) {
-    var generator;
+    var ext, generator, markdownExtensions;
+    markdownExtensions = ["markdown", "mdown", "mkdn", "md", "mkd", "mdwn", "mdtxt", "mdtext", "text"];
+    ext = file.getExtension();
     return generator = (function() {
-      switch (FSFile.getFileType(file.getExtension())) {
+      switch (FSFile.getFileType(ext)) {
         case "image":
           return PreviewImage;
         case "video":
@@ -577,7 +615,15 @@ PreviewArea = (function(_super) {
         case "code":
           return PreviewCode;
         default:
-          return PreviewFile;
+          return (function() {
+            if (ext === "rb") {
+              return PreviewCode;
+            } else if (_.contains(markdownExtensions, ext)) {
+              return PreviewMarkdown;
+            } else {
+              return PreviewFile;
+            }
+          })();
       }
     })();
   };
