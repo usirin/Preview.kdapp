@@ -1,5 +1,47 @@
 @import url('//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css');
 
+.preview-app .custom-icons .file .icon {
+  background              : none !important;
+  font-family             : FontAwesome;
+  font-size               : 14px;
+  display                 : inline-block;
+  font-style              : normal;
+  color                   : #728488 !important;
+  font-weight             : normal;
+  line-height             : 1;
+  -webkit-font-smoothing  : antialiased;
+  -moz-osx-font-smoothing : grayscale;
+  margin                  : 5px 3px 5px 7px;
+}
+
+.preview-app .custom-icons .file .icon:before {
+  content     : "\f016";
+}
+
+.preview-app .custom-icons .file .image:before {
+  content     : "\f1c5";
+}
+
+.preview-app .custom-icons .file .sound:before {
+  content     : "\f1c7";
+}
+
+.preview-app .custom-icons .file .code:before {
+  content     : "\f1c9";
+}
+
+.preview-app .custom-icons .file .video:before {
+  content     : "\f1c8";
+}
+
+.preview-app .custom-icons .file .archive:before {
+  content     : "\f1c6";
+}
+
+.preview-app .custom-icons .file .text:before {
+  content     : "\f0f6";
+}
+
 .preview-app .inner-header {
   background    : #282f31 !important;
   border-bottom : 1px solid #185334 !important;

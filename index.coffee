@@ -9,3 +9,7 @@ else
       "/:name?/usirin/Apps/Preview" : null
     dockPath : "/usirin/Apps/Umlgenerator"
     behavior : "application"
+    menu     :
+      items  : [
+        { title : "Toggle Custom Icons", eventName: "toggleIcons" }
+      ]

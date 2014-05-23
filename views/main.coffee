@@ -29,6 +29,7 @@ class PreviewMainView extends KDView
 
       @workspace.once "viewAppended", =>
         @bindWorkspaceEvents()
+        @bindMenuEvents()
 
       KD.utils.defer => @addSubView @workspace
 
@@ -37,4 +38,10 @@ class PreviewMainView extends KDView
     {@finder, @previewArea} = @panel.panesByName
 
     @previewArea.forwardEvent @panel, "FileSelected"
+
+  bindMenuEvents: ->
+    @on "toggleIconsMenuItemClicked", @bound "toggleIcons"
+
+  toggleIcons: ->
+    @finder.toggleClass "custom-icons"
 

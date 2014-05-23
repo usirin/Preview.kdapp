@@ -26,6 +26,7 @@ class PreviewFinder extends KDView
         mainView = @getDelegate()
         mainView.emit "FileSelected", file
 
+
   cleanOlderFiles: ->
     @vmController.run "rm /home/#{KD.nick()}/Web/#{@webPrefix}*"
 
