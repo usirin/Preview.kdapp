@@ -1,7 +1,7 @@
-/* Compiled by kdc on Fri May 23 2014 00:45:18 GMT+0000 (UTC) */
+/* Compiled by kdc on Fri May 23 2014 00:53:52 GMT+0000 (UTC) */
 (function() {
 /* KDAPP STARTS */
-/* BLOCK STARTS: /home/usirin/Applications/Preview.kdapp/helpers.coffee */
+/* BLOCK STARTS: helpers.coffee */
 var PreviewHelpers;
 
 PreviewHelpers = {
@@ -36,7 +36,7 @@ PreviewHelpers = {
     return "" + day + ", " + month + " " + dateOfMonth + ", " + year + " at " + hour + ":" + minute;
   }
 };
-/* BLOCK STARTS: /home/usirin/Applications/Preview.kdapp/generators/base-file.coffee */
+/* BLOCK STARTS: generators/base-file.coffee */
 var BaseFile;
 
 BaseFile = (function() {
@@ -88,7 +88,7 @@ BaseFile = (function() {
   return BaseFile;
 
 })();
-/* BLOCK STARTS: /home/usirin/Applications/Preview.kdapp/generators/preview-image.coffee */
+/* BLOCK STARTS: generators/preview-image.coffee */
 var PreviewImage, _ref,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -132,7 +132,7 @@ PreviewImage = (function(_super) {
   return PreviewImage;
 
 })(BaseFile);
-/* BLOCK STARTS: /home/usirin/Applications/Preview.kdapp/generators/preview-music.coffee */
+/* BLOCK STARTS: generators/preview-music.coffee */
 var PreviewMusic, _ref,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -178,7 +178,7 @@ PreviewMusic = (function(_super) {
   return PreviewMusic;
 
 })(BaseFile);
-/* BLOCK STARTS: /home/usirin/Applications/Preview.kdapp/generators/preview-video.coffee */
+/* BLOCK STARTS: generators/preview-video.coffee */
 var PreviewVideo, _ref,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -226,7 +226,7 @@ PreviewVideo = (function(_super) {
   return PreviewVideo;
 
 })(BaseFile);
-/* BLOCK STARTS: /home/usirin/Applications/Preview.kdapp/generators/preview-file.coffee */
+/* BLOCK STARTS: generators/preview-file.coffee */
 var PreviewFile, _ref,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -278,7 +278,7 @@ PreviewFile = (function(_super) {
   return PreviewFile;
 
 })(BaseFile);
-/* BLOCK STARTS: /home/usirin/Applications/Preview.kdapp/controllers/main.coffee */
+/* BLOCK STARTS: controllers/main.coffee */
 var PreviewController,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -301,7 +301,7 @@ PreviewController = (function(_super) {
   return PreviewController;
 
 })(AppController);
-/* BLOCK STARTS: /home/usirin/Applications/Preview.kdapp/views/details-item.coffee */
+/* BLOCK STARTS: views/details-item.coffee */
 var PreviewDetailsItem,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -344,7 +344,7 @@ PreviewDetailsItem = (function(_super) {
   return PreviewDetailsItem;
 
 })(JView);
-/* BLOCK STARTS: /home/usirin/Applications/Preview.kdapp/views/preview.coffee */
+/* BLOCK STARTS: views/preview.coffee */
 var PreviewView,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -429,7 +429,7 @@ PreviewView = (function(_super) {
   return PreviewView;
 
 })(JView);
-/* BLOCK STARTS: /home/usirin/Applications/Preview.kdapp/views/details.coffee */
+/* BLOCK STARTS: views/details.coffee */
 var PreviewDetails,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -486,7 +486,7 @@ PreviewDetails = (function(_super) {
   return PreviewDetails;
 
 })(JView);
-/* BLOCK STARTS: /home/usirin/Applications/Preview.kdapp/views/area.coffee */
+/* BLOCK STARTS: views/area.coffee */
 var PreviewArea,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -532,7 +532,7 @@ PreviewArea = (function(_super) {
   return PreviewArea;
 
 })(KDView);
-/* BLOCK STARTS: /home/usirin/Applications/Preview.kdapp/views/finder.coffee */
+/* BLOCK STARTS: views/finder.coffee */
 var PreviewFinder,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -547,6 +547,7 @@ PreviewFinder = (function(_super) {
     if (options == null) {
       options = {};
     }
+    options.cssClass = KD.utils.curry("custom-icons", options.cssClass);
     this.vmController = KD.getSingleton("vmController");
     this.cleanOlderFiles();
     PreviewFinder.__super__.constructor.call(this, options, data);
@@ -576,7 +577,7 @@ PreviewFinder = (function(_super) {
   return PreviewFinder;
 
 })(KDView);
-/* BLOCK STARTS: /home/usirin/Applications/Preview.kdapp/views/main.coffee */
+/* BLOCK STARTS: views/main.coffee */
 var PreviewMainView,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -645,7 +646,7 @@ PreviewMainView = (function(_super) {
   return PreviewMainView;
 
 })(KDView);
-/* BLOCK STARTS: /home/usirin/Applications/Preview.kdapp/index.coffee */
+/* BLOCK STARTS: index.coffee */
 var view;
 
 if (typeof appView !== "undefined" && appView !== null) {

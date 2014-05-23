@@ -3,6 +3,8 @@ class PreviewFinder extends KDView
 
   constructor: (options = {}, data) ->
 
+    options.cssClass = KD.utils.curry "custom-icons", options.cssClass
+
     @vmController = KD.getSingleton "vmController"
 
     # clean olderfiles
