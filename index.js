@@ -1,4 +1,4 @@
-/* Compiled by kdc on Fri May 23 2014 00:53:52 GMT+0000 (UTC) */
+/* Compiled by kdc on Fri May 23 2014 21:03:43 GMT+0000 (UTC) */
 (function() {
 /* KDAPP STARTS */
 /* BLOCK STARTS: helpers.coffee */
@@ -13,6 +13,13 @@ PreviewHelpers = {
   },
   isVideo: function(file) {
     return _.contains(["mp4", "ogg"], file.getExtension());
+  },
+  prettifyJson: function(content, fileExtension) {
+    if (fileExtension !== "json") {
+      return content;
+    }
+    content = JSON.parse(content);
+    return JSON.stringify(content, void 0, 2);
   },
   normalize: function(number) {
     if (number < 10) {
@@ -88,6 +95,50 @@ BaseFile = (function() {
   return BaseFile;
 
 })();
+/* BLOCK STARTS: generators/preview-code.coffee */
+var PreviewCode, _ref,
+  __hasProp = {}.hasOwnProperty,
+  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+PreviewCode = (function(_super) {
+  __extends(PreviewCode, _super);
+
+  function PreviewCode() {
+    _ref = PreviewCode.__super__.constructor.apply(this, arguments);
+    return _ref;
+  }
+
+  PreviewCode.prototype.create = function(src, file) {
+    var _this = this;
+    return this.file.fetchContents().then(function(resolve, reject) {
+      var content;
+      console.log(hljs.highlightAuto(resolve));
+      _this.element = new KDCustomHTMLView({
+        tagName: "pre",
+        cssClass: "code"
+      });
+      content = PreviewHelpers.prettifyJson(resolve, _this.file.getExtension());
+      _this.element.addSubView(new KDCustomHTMLView({
+        tagName: "code",
+        partial: hljs.highlightAuto(content).value
+      }));
+      KD.utils.defer(function() {
+        return _this.panel.loader.hide();
+      });
+      return _this.element;
+    });
+  };
+
+  PreviewCode.prototype.link = function() {
+    var _this = this;
+    return new Promise(function(resolve, reject) {
+      return resolve(_this.create());
+    });
+  };
+
+  return PreviewCode;
+
+})(BaseFile);
 /* BLOCK STARTS: generators/preview-image.coffee */
 var PreviewImage, _ref,
   __hasProp = {}.hasOwnProperty,
@@ -523,6 +574,8 @@ PreviewArea = (function(_super) {
           return PreviewVideo;
         case "sound":
           return PreviewMusic;
+        case "code":
+          return PreviewCode;
         default:
           return PreviewFile;
       }

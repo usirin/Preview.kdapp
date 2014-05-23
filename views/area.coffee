@@ -14,5 +14,6 @@ class PreviewArea extends KDView
       when "image" then PreviewImage
       when "video" then PreviewVideo
       when "sound" then PreviewMusic
+      when "code"  then PreviewCode
       else PreviewFile
 

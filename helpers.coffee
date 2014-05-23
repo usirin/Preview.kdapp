@@ -3,6 +3,11 @@ PreviewHelpers =
   isMusic : (file) -> _.contains ["mp3", "m4a", "ogg"], file.getExtension()
   isVideo : (file) -> _.contains ["mp4", "ogg"], file.getExtension()
 
+  prettifyJson: (content, fileExtension) ->
+    return content unless fileExtension is "json"
+    content = JSON.parse content
+    return JSON.stringify(content, undefined, 2)
+
   normalize: (number) ->
     if number < 10 then "0"+number else ""+number
 

@@ -130,6 +130,7 @@ body {
 
 .file-thumb,
 .preview-placeholder img,
+.preview-placeholder .code,
 .preview-placeholder video {
   background        : rgba(0, 0, 0, 0.1);
   box-shadow        : inset 1px 1px 0 rgba(0, 0, 0, 0.1);
@@ -149,6 +150,13 @@ body {
   height            : auto;
 
   margin-bottom     : 15px;
+}
+
+.preview-placeholder .code {
+  background-color : #28292a;
+  width            : 70%;
+  overflow-y       : scroll;
+  max-height       : 90%;
 }
 
 .preview-placeholder audio {
@@ -181,5 +189,52 @@ body {
   top: 50%;
   left: 50%;
   margin: -24px 0 0 -24px;
+}
+
+.preview-app pre {
+  padding: 10px 0;
+}
+
+.preview-app pre code {
+  display     : block;
+  padding     : 14px;
+  color       : #fff;
+  bg          : color, #28292a;
+  line-height : 20px;
+}
+.preview-app pre code .hljs-comment,
+.preview-app pre code .hljs-string,
+.preview-app pre code .hljs-regexp {
+  color: #96b486;
+}
+.preview-app pre code .hljs-keyword {
+  color: #9b8298;
+}
+.preview-app pre code .hljs-title,
+.preview-app pre code .hljs-variable {
+  color: #6096be;
+}
+.preview-app pre code .hljs-literal,
+.preview-app pre code .hljs-number {
+  color: #d17819;
+}
+.preview-app pre code .hljs-constant,
+.preview-app pre code .hljs-decorator,
+.preview-app pre code .hljs-typename {
+  color: #deb63a;
+}
+.preview-app pre code.lang-go .built_in {
+  color: #6096be;
+}
+.preview-app pre code.lang-css .hljs-pseudo {
+  color: #deb63a;
+}
+.preview-app pre code.lang-css .hljs-id,
+.preview-app pre code.lang-css .hljs-tag,
+.preview-app pre code.lang-css .hljs-class {
+  color: #9b8298;
+}
+.preview-app pre code.lang-css .hljs-attribute {
+  color: #6096be;
 }
 
