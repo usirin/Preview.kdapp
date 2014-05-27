@@ -1,4 +1,4 @@
-/* Compiled by kdc on Sat May 24 2014 01:39:41 GMT+0000 (UTC) */
+/* Compiled by kdc on Tue May 27 2014 01:31:13 GMT+0000 (UTC) */
 (function() {
 /* KDAPP STARTS */
 /* BLOCK STARTS: helpers.coffee */
@@ -112,19 +112,21 @@ PreviewCode = (function(_super) {
     var _this = this;
     return this.file.fetchContents().then(function(resolve, reject) {
       var content;
-      _this.element = new KDCustomHTMLView({
-        tagName: "pre",
-        cssClass: "code"
-      });
       content = PreviewHelpers.prettifyJson(resolve, _this.file.getExtension());
-      _this.element.addSubView(new KDCustomHTMLView({
-        tagName: "code",
-        partial: hljs.highlightAuto(content).value
-      }));
-      KD.utils.defer(function() {
-        return _this.panel.loader.hide();
+      _this.aceHolder = new KDCustomHTMLView({
+        cssClass: "aceholder"
       });
-      return _this.element;
+      _this.ace = new Ace({
+        delegate: _this,
+        enableShortcuts: false
+      }, _this.file);
+      _this.ace.once("ace.ready", function() {
+        _this.prepareEditor(content);
+        _this.panel.loader.hide();
+        return console.log("aceReady");
+      });
+      _this.aceHolder.addSubView(_this.ace);
+      return [_this.aceHolder];
     });
   };
 
@@ -133,6 +135,19 @@ PreviewCode = (function(_super) {
     return new Promise(function(resolve, reject) {
       return resolve(_this.create());
     });
+  };
+
+  PreviewCode.prototype.prepareEditor = function(content) {
+    var editor;
+    editor = this.ace.editor;
+    editor.setValue(content);
+    editor.setOption("scrollPastEnd", false);
+    editor.setFontSize(16);
+    editor.renderer.setPadding(10);
+    editor.clearSelection();
+    editor.setHighlightActiveLine(false);
+    editor.renderer.setShowGutter(false);
+    return editor.blur();
   };
 
   return PreviewCode;
@@ -452,22 +467,23 @@ PreviewView = (function(_super) {
         width: 48
       }
     });
+    this.item = [];
     KD.utils.defer(function() {
       return _this.addSubView(_this.loader);
     });
   }
 
-  PreviewView.prototype.createName = function(name) {
-    this.name || (this.name = new KDView({
-      cssClass: "preview-img-name"
-    }));
-    return this.name.updatePartial(name);
-  };
-
   PreviewView.prototype.destroyAll = function() {
-    var _ref;
+    var item, _i, _len, _ref, _results;
     this.loader.show();
-    return (_ref = this.item) != null ? _ref.destroy() : void 0;
+    _ref = this.item;
+    _results = [];
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      item = _ref[_i];
+      console.log("silinen: " + item);
+      _results.push(item.destroy());
+    }
+    return _results;
   };
 
   PreviewView.prototype.createPlaceholder = function() {
@@ -485,11 +501,16 @@ PreviewView = (function(_super) {
   PreviewView.prototype.addAll = function() {
     var _this = this;
     return KD.utils.defer(function() {
+      var item, _i, _len, _ref, _results;
       _this.placeholder.show();
-      _this.placeholder.addSubView(_this.item);
-      if (!_this.name) {
-        return _this.placeholder.addSubView(_this.name);
+      _ref = _this.item;
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        item = _ref[_i];
+        console.log("eklenen: " + item);
+        _results.push(_this.placeholder.addSubView(item));
       }
+      return _results;
     });
   };
 
@@ -500,14 +521,14 @@ PreviewView = (function(_super) {
     this.destroyAll();
     return file.fetchRawContents().then(function(resolve, reject) {
       return (new generator(resolve.content, file, _this)).generate().then(function(item) {
-        _this.item = item;
-        _this.createName(file.name);
+        console.log("fetchRowContent < 10 MiB");
+        _this.item = Array.isArray(item) ? item : [item];
         return _this.addAll();
       });
     }, function(err) {
       return (new generator(null, file, _this)).generate().then(function(item) {
-        _this.item = item;
-        _this.createName(file.name);
+        console.log("fetchRowContent > 10 MiB");
+        _this.item = Array.isArray(item) ? item : [item];
         return _this.addAll();
       });
     });
@@ -618,6 +639,8 @@ PreviewArea = (function(_super) {
           return (function() {
             if (ext === "rb") {
               return PreviewCode;
+            } else if (ext === "ogg") {
+              return PreviewVideo;
             } else if (_.contains(markdownExtensions, ext)) {
               return PreviewMarkdown;
             } else {

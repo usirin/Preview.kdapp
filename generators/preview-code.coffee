@@ -2,20 +2,43 @@ class PreviewCode extends BaseFile
 
   create: (src, file) ->
     @file.fetchContents().then (resolve, reject) =>
-      @element   = new KDCustomHTMLView
-        tagName  : "pre"
-        cssClass : "code"
 
       content = PreviewHelpers.prettifyJson resolve, @file.getExtension()
 
-      @element.addSubView new KDCustomHTMLView
-        tagName : "code"
-        partial : hljs.highlightAuto(content).value
+      @aceHolder = new KDCustomHTMLView
+        cssClass : "aceholder"
 
-      KD.utils.defer => @panel.loader.hide()
+      @ace              = new Ace
+        delegate        : this
+        enableShortcuts : no
+      , @file
 
-      return @element
+      @ace.once "ace.ready", =>
+        @prepareEditor content
+        @panel.loader.hide()
+        console.log "aceReady"
+
+      @aceHolder.addSubView @ace
+
+      return [@aceHolder]
 
   link: ->
     return new Promise (resolve, reject) =>
       resolve @create()
+
+  prepareEditor: (content) ->
+    { editor } = @ace
+    editor.setValue content
+
+    editor.setOption "scrollPastEnd", no
+
+    editor.setFontSize 16
+
+    editor.renderer.setPadding 10
+
+    editor.clearSelection()
+
+    editor.setHighlightActiveLine no
+    editor.renderer.setShowGutter no
+    editor.blur()
+
