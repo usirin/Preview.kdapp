@@ -9,6 +9,9 @@
 #   @create()
 ##
 class BaseFile
+
+  @editable: no
+
   constructor: (@src, @file, @panel) ->
     { @vmController } = KD.singletons
     @webPath = "/home/#{KD.nick()}/Web/"

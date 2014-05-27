@@ -16,7 +16,6 @@ class PreviewView extends JView
   destroyAll: ->
     @loader.show()
     for item in @item
-      console.log "silinen: #{item}"
       item.destroy()
 
   createPlaceholder: ->
@@ -32,21 +31,32 @@ class PreviewView extends JView
     KD.utils.defer =>
       @placeholder.show()
       for item in @item
-        console.log "eklenen: #{item}"
         @placeholder.addSubView item
+
+
+  createEditButton: (options) ->
+    { delegate } = options
+
+    @editButton = new KDButtonView
+      cssClass  : "edit-button"
+      title     : "Edit"
+      callback  : ->
+        delegate.editButtonClicked()
+
+    @addSubView @editButton
 
   generate: (options) ->
     { generator, file } = options
     @destroyAll()
 
     file.fetchRawContents().then (resolve, reject) =>
-      (new generator resolve.content, file, this).generate().then (item) =>
-        console.log "fetchRowContent < 10 MiB"
+      (instance = new generator resolve.content, file, this).generate().then (item) =>
+        if generator.editable then @createEditButton(delegate: instance)
         @item = if (Array.isArray item) then item else [item]
         @addAll()
     , (err) => # this happens when a file size is over 10MiB
-      (new generator null, file, this).generate().then (item) =>
-        console.log "fetchRowContent > 10 MiB"
+      (instance = new generator null, file, this).generate().then (item) =>
+        if generator.editable then @createEditButton(delegate: instance)
         @item = if (Array.isArray item) then item else [item]
         @addAll()
 
