@@ -29,7 +29,8 @@ class PreviewArea extends KDView
       when "sound" then PreviewMusic
       when "code"  then PreviewCode
       else do ->
-        if ext is "rb" then PreviewCode
+        if      ext is "rb" then PreviewCode
+        else if ext is "ogg" then PreviewVideo
         else if _.contains markdownExtensions, ext then PreviewMarkdown
         else PreviewFile
 
