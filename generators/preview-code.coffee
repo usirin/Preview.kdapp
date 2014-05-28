@@ -1,5 +1,26 @@
 class PreviewCode extends BaseFile
 
+  constructor: (src, file, panel) ->
+    super src, file, panel
+
+    @on "EditButtonClicked"   , @bound "editButtonClicked"
+    @on "SaveButtonClicked"   , @bound "saveButtonClicked"
+    @on "CancelButtonClicked" , @bound "cancelButtonClicked"
+
+  @editable: yes
+
+  editButtonClicked: ->
+    @enableEditor()
+
+  saveButtonClicked: ->
+    console.log "save clicked"
+    @disableEditor()
+    @requestSave()
+
+  cancelButtonClicked: ->
+    console.log "cancel clicked"
+    @disableEditor()
+
   create: (src, file) ->
     @file.fetchContents().then (resolve, reject) =>
 
@@ -16,7 +37,10 @@ class PreviewCode extends BaseFile
       @ace.once "ace.ready", =>
         @prepareEditor content
         @panel.loader.hide()
-        console.log "aceReady"
+
+      @ace.on "dblclick", =>
+        @panel.emit "EditorActivated"
+        @enableEditor()
 
       @aceHolder.addSubView @ace
 
@@ -31,14 +55,39 @@ class PreviewCode extends BaseFile
     editor.setValue content
 
     editor.setOption "scrollPastEnd", no
+    editor.getSession().setUseWrapMode yes
 
     editor.setFontSize 16
 
     editor.renderer.setPadding 10
 
-    editor.clearSelection()
+    @disableEditor()
 
+  enableEditor: ->
+    @contentBeforeEdit = @ace.editor.getSession().getValue()
+    @ace.setClass "ace-editable"
+
+    { editor } = @ace
+
+    editor.selectAll()
+    editor.setHighlightActiveLine yes
+    editor.renderer.setShowGutter yes
+
+  disableEditor: ->
+    @ace.unsetClass "ace-editable"
+
+    { editor } = @ace
+
+    editor.clearSelection()
     editor.setHighlightActiveLine no
     editor.renderer.setShowGutter no
-    editor.blur()
+
+  requestSave: ->
+    file    = @getData()
+    return  unless file
+    content = @ace.editor.getSession().getValue()
+
+    return if @contentBeforeEdit == content
+
+    file.save content, (err)-> warn err  if err
 
