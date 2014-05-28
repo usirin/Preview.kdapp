@@ -8,11 +8,12 @@
 #   @webPrefix()
 #   @create()
 ##
-class BaseFile
+class BaseFile extends KDObject
 
   @editable: no
 
   constructor: (@src, @file, @panel) ->
+    super
     { @vmController } = KD.singletons
     @webPath = "/home/#{KD.nick()}/Web/"
 
