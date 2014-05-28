@@ -8,10 +8,13 @@ class PreviewView extends JView
 
     @item = []
 
+    @registerEvents()
+
     KD.utils.defer => @addSubView @loader
 
-#   createName: (name) ->
-#     @name.updatePartial name
+  registerEvents: ->
+    @on "EditorActivated"   , @bound "enableEditMode"
+    @on "EditorDeactivated" , @bound "disableEditMode"
 
   destroyAll: ->
     @loader.show()
@@ -33,17 +36,41 @@ class PreviewView extends JView
       for item in @item
         @placeholder.addSubView item
 
+  enableEditMode: ->
+    @buttonGroup.buttons["Edit"].disable()
+    @buttonGroup.buttons["Save"].enable()
+    @buttonGroup.buttons["Cancel"].enable()
 
-  createEditButton: (options) ->
+  disableEditMode: ->
+    @buttonGroup.buttons["Edit"].enable()
+    @buttonGroup.buttons["Save"].disable()
+    @buttonGroup.buttons["Cancel"].disable()
+
+  createButtonGroup: (options) ->
     { delegate } = options
 
-    @editButton = new KDButtonView
-      cssClass  : "edit-button"
-      title     : "Edit"
-      callback  : ->
-        delegate.editButtonClicked()
+    @buttonGroup   = new KDButtonGroupView
+      cssClass     : "button-group"
+      buttons      :
+        "Edit"     :
+          cssClass : "clean-gray"
+          callback : =>
+            @enableEditMode()
+            delegate.emit "EditButtonClicked"
+        "Save"     :
+          cssClass : "clean-gray"
+          disabled : yes
+          callback : =>
+            @disableEditMode()
+            delegate.emit "SaveButtonClicked"
+        "Cancel"   :
+          cssClass : "clean-gray"
+          disabled : yes
+          callback : =>
+            @disableEditMode()
+            delegate.emit "CancelButtonClicked"
 
-    @addSubView @editButton
+    @addSubView @buttonGroup
 
   generate: (options) ->
     { generator, file } = options
@@ -51,12 +78,18 @@ class PreviewView extends JView
 
     file.fetchRawContents().then (resolve, reject) =>
       (instance = new generator resolve.content, file, this).generate().then (item) =>
-        if generator.editable then @createEditButton(delegate: instance)
+        if generator.editable
+        then @createButtonGroup(delegate: instance)
+        else @buttonGroup?.hide()
+
         @item = if (Array.isArray item) then item else [item]
         @addAll()
     , (err) => # this happens when a file size is over 10MiB
       (instance = new generator null, file, this).generate().then (item) =>
-        if generator.editable then @createEditButton(delegate: instance)
+        if generator.editable
+        then @createButtonGroup(delegate: instance)
+        else @buttonGroup?.hide()
+
         @item = if (Array.isArray item) then item else [item]
         @addAll()
 
